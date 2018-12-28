@@ -147,7 +147,7 @@ mitmproxy/mitmdump does not have native support for pcap files (which can be vis
 
 Add the following line to `~/.bashrc`:
 ```
-export SSLKEYLOGFILE="$PWD/.mitmproxy/sslkeylogfile.txt" mitmproxy
+export SSLKEYLOGFILE="$PWD/.mitmproxy/sslkeylogfile.txt"
 ```
 then run
 ```
