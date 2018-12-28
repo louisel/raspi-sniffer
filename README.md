@@ -8,12 +8,15 @@ Raspberry Pi
 Wifi dongle (if using Raspberry Pi without wifi)
 
 # Our setup
-Raspberry Pi model B rev 2 with a TP-Link TL-WN772N wifi dongle
+Raspberry Pi model B rev 2 with a TP-Link TL-WN772N wifi dongle in headles mode
 
 ### Initial setup
-Flash the raspbian stretch lite image, then put ssh file in the boot partition
-Upon logging in with ssh,
+Flash the raspbian stretch lite image.
+Since we are running in headless mode: put `ssh` file (no file extension) in the boot partition
+If logging in with `ssh`,
+```
 passwd
+```
 To change the password
 Then enable ssh on boot:
 ```
@@ -111,7 +114,7 @@ pyenv install 3.7.1
 pyenv virtualenv 3.7.1 mitm
 pyenv activate mitm
 pip install mitmproxy
-mitmproxy --transparent --host
+mitmproxy --mode transparent --showhost
 ```
 
 To run mitmproxy on boot, add the file mitm.sh:
