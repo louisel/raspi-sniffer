@@ -55,11 +55,11 @@ Credit: https://raspberrypi.stackexchange.com/questions/37920/how-do-i-set-up-ne
 
 In the file `/etc/default/isc-dhcp-server`, set: `INTERFACESv4=”wlan0”`
 
-If fails to start dhcpcd, remove the file dhcpcd.pid
+If dhcpcd fails to start, remove the file dhcpcd.pid
 ```sudo rm /var/run/dhcpd.pid```
 
 ### Setup hostapd
-run `sudo apt-get hostapd`
+Run `sudo apt-get hostapd`
 
 Edit `/etc/hostapd/hostapd.conf`:
 ```
