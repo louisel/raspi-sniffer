@@ -139,3 +139,5 @@ Then run
 chmod +x /etc/init.d/mitm.sh
 sudo update-rc.d /etc/init.d/mitm.sh defaults
 ```
+### Note: 
+If ssh fails after reboot, remove wifi dongle and reboot again. 
