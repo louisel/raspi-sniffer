@@ -141,5 +141,18 @@ To run mitmdump (the command line interface counterpart), run:
 ```
 mitmdump --mode transparent --showhost -w <file to output here>
 ```
+
+### Setup tshark to work with mitmproxy
+mitmproxy/mitmdump does not have native support for pcap files (which can be visualised in wireshark), so we follow these steps to get a pcap sniffer (tshark) working with mitmproxy: (taken from https://docs.mitmproxy.org/stable/howto-wireshark-tls/)
+
+Add the following line to `~/.bashrc`:
+```
+export SSLKEYLOGFILE="$PWD/.mitmproxy/sslkeylogfile.txt" mitmproxy
+```
+then run
+```
+source ~/.bashrc
+```
+for it to take effect immediately.
 ### Note: 
 If ssh fails after reboot, remove wifi dongle and reboot again. 
