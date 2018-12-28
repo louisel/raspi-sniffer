@@ -126,18 +126,5 @@ pyenv activate mitm
 pip install mitmproxy
 mitmproxy --mode transparent --showhost
 ```
-
-To run mitmproxy on boot, add the file mitm.sh:
-```
-#!/bin/bash 
-pyenv activate mitm
-mitmproxy --transparent --host
-```
-
-Then run 
-```
-chmod +x /etc/init.d/mitm.sh
-sudo update-rc.d /etc/init.d/mitm.sh defaults
-```
 ### Note: 
 If ssh fails after reboot, remove wifi dongle and reboot again. 
