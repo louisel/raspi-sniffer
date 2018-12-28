@@ -108,15 +108,21 @@ net.ipv4.ip_forward=1
 net.ipv4.conf.all.send_redirects=0
 ```
 
-To avoid having to re-configure the iptables each time the Pi reboots, run the following command:
+To avoid having to re-configure the iptables each time the Pi reboots, save the iptables rules:
 ```
 sudo sh -c "iptables-save > /etc/iptables.ipv4.nat"
 ```
 
-Append the line to the `/etc/network/interfaces` file
+Create a bash script (`/etc/network/if-up.d/iptables`) with the following commands:
 ```
-up iptables-restore < /etc/iptables.ipv4.nat
+#!/bin/sh
+iptables-restore < /etc/iptables.ipv4.nat
 ```
+Ensure that the script is executable:
+```
+chmod +x /etc/network/if-up.d/iptables
+```
+The iptables rules will now be restored upon network (re)start. 
 
 Setup mitmproxy in a pyenv because mitmproxy requires python>=3.6 but raspbian only has python 3.5.3
 ```
