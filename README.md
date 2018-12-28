@@ -104,8 +104,8 @@ sudo iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 443 -j REDIRECT --to-
 
 Add the following lines to `/etc/sysctl.d/mitmproxy.conf` to force the first two lines to persist
 ```
-sysctl -w net.ipv4.ip_forward=1
-sysctl -w net.ipv4.conf.all.send_redirects=0
+net.ipv4.ip_forward=1
+net.ipv4.conf.all.send_redirects=0
 ```
 
 To avoid having to re-configure the iptables each time the Pi reboots, run the following command:
