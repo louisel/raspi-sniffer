@@ -25,11 +25,12 @@ sudo update-rc.d ssh enable
 ```
 
 ### Setup access point
-Use this to setup router:
+Follow the instructions from this website:
 http://raspberrypihq.com/how-to-turn-a-raspberry-pi-into-a-wifi-router/
 
 ### Setup dhcpd
-Edit /etc/network/interfaces: 
+Some updates were made to the instructions from the above website:
+`/etc/network/interfaces`: 
 ```
 auto lo
 
@@ -52,11 +53,10 @@ sudo systemctl enable networking
 ```
 Credit: https://raspberrypi.stackexchange.com/questions/37920/how-do-i-set-up-networking-wifi-static-ip-address/74428#74428 
 
-And edit /etc/default/isc-dhcp-server:
-INTERFACESv4=”wlan0”
+In the file `/etc/default/isc-dhcp-server`, set: `INTERFACESv4=”wlan0”`
 
-If fails to start dhcpcd, remove file dhcpcd.pid
-$ sudo rm /var/run/dhcpd.pid
+If fails to start dhcpcd, remove the file dhcpcd.pid
+```sudo rm /var/run/dhcpd.pid```
 
 ### Setup hostapd
 run `sudo apt-get hostapd`
@@ -106,6 +106,16 @@ Add the following lines to `/etc/sysctl.d/mitmproxy.conf` to force the first two
 ```
 sysctl -w net.ipv4.ip_forward=1
 sysctl -w net.ipv4.conf.all.send_redirects=0
+```
+
+To avoid having to re-configure the iptables each time the Pi reboots, run the following command:
+```
+sudo sh -c "iptables-save > /etc/iptables.ipv4.nat"
+```
+
+Append the line to the `/etc/network/interfaces` file
+```
+up iptables-restore < /etc/iptables.ipv4.nat
 ```
 
 Setup mitmproxy in a pyenv because mitmproxy requires python>=3.6 but raspbian only has python 3.5.3
