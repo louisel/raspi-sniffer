@@ -130,7 +130,16 @@ pyenv install 3.7.1
 pyenv virtualenv 3.7.1 mitm
 pyenv activate mitm
 pip install mitmproxy
+```
+
+To run mitmproxy, run:
+```
 mitmproxy --mode transparent --showhost
+```
+
+To run mitmdump (the command line interface counterpart), run:
+```
+mitmdump --mode transparent --showhost -w <file to output here>
 ```
 ### Note: 
 If ssh fails after reboot, remove wifi dongle and reboot again. 
