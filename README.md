@@ -28,7 +28,7 @@ sudo update-rc.d ssh enable
 Follow the instructions from this website:
 http://raspberrypihq.com/how-to-turn-a-raspberry-pi-into-a-wifi-router/
 
-### Setup dhcpd
+### Setup dhcp server
 Some updates were made to the instructions from the above website:
 `/etc/network/interfaces`: 
 ```
@@ -55,7 +55,7 @@ Credit: https://raspberrypi.stackexchange.com/questions/37920/how-do-i-set-up-ne
 
 In the file `/etc/default/isc-dhcp-server`, set: `INTERFACESv4=”wlan0”`
 
-If dhcpcd fails to start, remove the file dhcpcd.pid
+If isc-dhcp-server fails to start, remove the file dhcpd.pid
 ```sudo rm /var/run/dhcpd.pid```
 
 ### Setup hostapd
