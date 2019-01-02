@@ -88,7 +88,9 @@ sudo systemctl enable networking
 Credit: https://raspberrypi.stackexchange.com/questions/37920/how-do-i-set-up-networking-wifi-static-ip-address/74428#74428 
 
 Note: If isc-dhcp-server fails to start, try removing the file dhcpd.pid
-```sudo rm /var/run/dhcpd.pid```
+```
+sudo rm /var/run/dhcpd.pid
+```
 
 ### Setup hostapd
 Run `sudo apt-get hostapd`
@@ -170,10 +172,15 @@ To run mitmdump (the command line interface counterpart), run:
 mitmdump --mode transparent --showhost -w <file to output here>
 ```
 
-### (Optional) Install tshark
+### (Optional) tshark integration 
 
-For a more detailed analysis of the traffic captured in by the mitmproxy, install tshark using the following command: 
-```sudo apt-get install tshark```
+mitmproxy/mitmdump does not have native support for .pcap files (which can be visualised in wireshark), so we follow these steps to get packet capture (tshark) working with mitmproxy: (taken from https://docs.mitmproxy.org/stable/howto-wireshark-tls/)
+
+```
+sudo apt-get install tshark
+echo "export SSLKEYLOGFILE=\"$PWD/.mitmproxy/sslkeylogfile.txt\"" >> ~/.bashrc
+source ~/.bashrc
+```
 
 Run tshark in the background before running mitmproxy:
 ```
@@ -191,27 +198,9 @@ where <filename> is the name of the .pcap file to read and <display filter> is t
 To filter for http headers:
 ```
 http contains <string>
-```
-
-To filter for http2 headers :
-```
 http2.header.value contains <string>
 ```
-
 where <string> is the string that the header should contain in both cases.
 
-
-### Setup tshark to work with mitmproxy
-mitmproxy/mitmdump does not have native support for pcap files (which can be visualised in wireshark), so we follow these steps to get a pcap sniffer (tshark) working with mitmproxy: (taken from https://docs.mitmproxy.org/stable/howto-wireshark-tls/)
-
-Add the following line to `~/.bashrc`:
-```
-export SSLKEYLOGFILE="$PWD/.mitmproxy/sslkeylogfile.txt"
-```
-then run
-```
-source ~/.bashrc
-```
-for it to take effect immediately.
 ### Note: 
 If ssh fails after reboot, remove wifi dongle and reboot again. 
