@@ -10,7 +10,7 @@ Wifi dongle (if using Raspberry Pi without wifi)
 # Our setup
 Raspberry Pi model B rev 2 with a TP-Link TL-WN772N wifi dongle in headles mode
 
-### Initial setup
+### Initial SSH setup
 Flash the raspbian stretch lite image.
 Since we are running in headless mode: put `ssh` file (no file extension) in the boot partition
 If logging in with `ssh`,
@@ -28,9 +28,43 @@ sudo update-rc.d ssh enable
 Follow the instructions from this website:
 http://raspberrypihq.com/how-to-turn-a-raspberry-pi-into-a-wifi-router/
 
-### Setup dhcp server
-Some updates were made to the instructions from the above website:
-`/etc/network/interfaces`: 
+### Setup DHCP server
+
+To install the DHCP server, run the command:
+```sudo apt-get install isc-dhcp-server```
+
+Configure the **/etc/dhcp/dhcpd.conf** by commenting out the following 2 lines:
+```
+option domain-name "example.org";
+option domain-name-servers ns1.example.org, ns2.example.org;
+```
+Uncomment the word authoritative in the section:
+```
+# If this DHCP server is the official DHCP server for the local
+# network, the authoritative directive should be uncommented.
+#authoritative;
+```
+Lastly, add the following lines to the end of the configuration file:
+```
+subnet 192.168.10.0 netmask 255.255.255.0 {
+ range 192.168.10.10 192.168.10.20;
+ option broadcast-address 192.168.10.255;
+ option routers 192.168.10.1;
+ default-lease-time 600;
+ max-lease-time 7200;
+ option domain-name "local-network";
+ option domain-name-servers 8.8.8.8, 8.8.4.4;
+}
+```
+
+Configure the file **/etc/default/isc-dhcp-server** by updating the line  
+```INTERFACESv4=”wlan0”```
+This ensures that wlan0 is the interface on which the DHCP server leases IP addresses. 
+
+The DHCP server needs to be configured with a static IP address. To begin, ensure that the wlan0 interface is down by running the command: 
+```sudo ifdown wlan0```
+
+Update the file **/etc/network/interfaces** with the following lines: 
 ```
 auto lo
 
@@ -53,15 +87,13 @@ sudo systemctl enable networking
 ```
 Credit: https://raspberrypi.stackexchange.com/questions/37920/how-do-i-set-up-networking-wifi-static-ip-address/74428#74428 
 
-In the file `/etc/default/isc-dhcp-server`, set: `INTERFACESv4=”wlan0”`
-
-If isc-dhcp-server fails to start, remove the file dhcpd.pid
+Note: If isc-dhcp-server fails to start, try removing the file dhcpd.pid
 ```sudo rm /var/run/dhcpd.pid```
 
 ### Setup hostapd
 Run `sudo apt-get hostapd`
 
-Edit `/etc/hostapd/hostapd.conf`:
+Edit **/etc/hostapd/hostapd.conf**:
 ```
 ssid=<YOUR SSID GOES HERE>
 wpa_passphrase=<YOUR PASSPHRASE GOES HERE>
@@ -78,16 +110,12 @@ wpa_key_mgmt=WPA-PSK
 wpa_pairwise=CCMP
 rsn_pairwise=CCMP
 ```
-  
-Edit the following line in `/etc/defaults/hostapd`:
-`DAEMON_CONF=/etc/hostapd/hostapd.conf`
 
-Add/edit the following line in `/etc/init.d/hostapd`:
-`DAEMON_CONF=/etc/hostapd/hostapd.conf`
+Edit the following line in **/etc/defaults/hostapd**:
+```DAEMON_CONF=/etc/hostapd/hostapd.conf```
 
-### Install tshark
-
-sudo apt-get install tshark
+Add/edit the following line in **/etc/init.d/hostapd**:
+```DAEMON_CONF=/etc/hostapd/hostapd.conf```
 
 ### Install mitmproxy
 
@@ -141,6 +169,37 @@ To run mitmdump (the command line interface counterpart), run:
 ```
 mitmdump --mode transparent --showhost -w <file to output here>
 ```
+
+### (Optional) Install tshark
+
+For a more detailed analysis of the traffic captured in by the mitmproxy, install tshark using the following command: 
+```sudo apt-get install tshark```
+
+Run tshark in the background before running mitmproxy:
+```
+nohup sudo tshark -w <filename> -i wlan0
+```
+where <filename> is the name of the output file of the packet capture.
+
+To use tshark for traffic analysis, run the command:
+```
+sudo tshark -r <filename> -Y "<display filter>"
+```
+where <filename> is the name of the .pcap file to read and <display filter> is the filter to be applied. 
+
+## Possibly interesting display filters to use
+To filter for http headers:
+```
+http contains <string>
+```
+
+To filter for http2 headers :
+```
+http2.header.value contains <string>
+```
+
+where <string> is the string that the header should contain in both cases.
+
 
 ### Setup tshark to work with mitmproxy
 mitmproxy/mitmdump does not have native support for pcap files (which can be visualised in wireshark), so we follow these steps to get a pcap sniffer (tshark) working with mitmproxy: (taken from https://docs.mitmproxy.org/stable/howto-wireshark-tls/)
