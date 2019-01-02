@@ -8,11 +8,12 @@ Debian now has packages for sslsplit, so just do
 sudo apt-get sslsplit
 ```
 
-### Generate the keys
+### Generate the certificate
 ```
 openssl genrsa -out ca.key 4096
 openssl req -new -x509 -days 1826 -key ca.key -out ca.cer
 ```
+Save the certificate on to your device.
 
 ### Setup iptables
 If one has been following the mitmproxy installation instructions, ip forwarding will have been setup (and is persistant). Otherwise run
@@ -34,3 +35,11 @@ sudo iptables -t nat -A PREROUTING -p tcp --dport 5222 -j REDIRECT --to-ports 80
 ```
 
 ### Running sslsplit
+```
+sudo sslsplit -D -l connections.log -j ./<directory where connection details go>/ -S ./<directory where logs go>/ -k ca.key -c ca.cer ssl 0.0.0.0 8443 tcp 0.0.0.0 8080
+```
+
+e.g.
+```
+sudo sslsplit -D -l connections.log -j ./sslconn/ -S ./ssllog/ -k ca.key -c ca.cer ssl 0.0.0.0 8443 tcp 0.0.0.0 8080
+```
