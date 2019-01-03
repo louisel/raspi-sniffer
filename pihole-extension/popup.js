@@ -15,14 +15,14 @@ changeColor.onclick = function(element) {
 };*/
 
 window.onload = function() {
-    console.log("loaded");
-    console.log(document.getElementById("admin"));
-    let adminBtn = document.getElementById("admin"));
-    adminBtn.onClick
-}
+  console.log('loaded');
+  console.log(document.getElementById('admin'));
+  let adminBtn = document.getElementById('admin');
+  adminBtn.onClick;
+};
 
 function adminClick() {
-    console.log("clicked");
-    var newUrl = "192.168.0.11/admin"; //TODO: get ip from settings
-    chrome.tabs.create({ url: newUrl });
-};
+  console.log('clicked');
+  var newUrl = '192.168.0.11/admin'; //TODO: get ip from settings
+  chrome.tabs.create({ url: newUrl });
+}
