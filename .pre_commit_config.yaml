@@ -1,0 +1,8 @@
+----
+   repo: https://github.com/awebdeveloper/pre-commit-prettier
+    rev: "1.15.3"
+    hooks:
+    -   id: prettier
+        name: JS/JSON/CSS style
+        files: \.(js|json|css|html|md)$
+        args: ['--single-quote', '--list-different']
