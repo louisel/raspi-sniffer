@@ -1,3 +1,4 @@
+/* 
 chrome.runtime.onInstalled.addListener(function() {
   chrome.storage.sync.set({ color: '#3aa757' }, function() {
     console.log('The color is green.');
@@ -16,7 +17,7 @@ chrome.runtime.onInstalled.addListener(function() {
   });
 });
 
-/* function adminClick() {
+function adminClick() {
      console.log("clicked");
      var newUrl = "192.168.0.11/admin"; //TODO: get ip from settings
      chrome.tabs.create({ url: newUrl });
