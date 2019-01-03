@@ -15,15 +15,14 @@ changeColor.onclick = function(element) {
 };*/
 
 window.onload = function() {
-  var apiKey = null;
-  chrome.storage.local.get(null, function(result) {
+  /*chrome.storage.local.get(null, function(result) {
     apiKey = result.apikey;
-  });
+  });*/
   let adminBtn = document.getElementById('admin');
   adminBtn.addEventListener('click', adminClick);
   let powerBtn = document.getElementById('power');
   powerBtn.addEventListener('click', () => {
-    powerClick(API_KEY, powerBtn.value);
+    powerClick(apiKey, powerBtn.value);
   });
   let settingsBtn = document.getElementById('settings');
   settingsBtn.addEventListener('click', settingsClick);
@@ -36,11 +35,11 @@ function adminClick() {
   window.open(newUrl);
 }
 
-function powerClick(API_KEY, val) {
+function powerClick(apiKey, val) {
   var httpRes = new XMLHttpRequest();
   var url = 'http://pi.hole/admin/api.php?';
   var activate = val == 'ON' ? 'disable' : 'enable';
-  url = url + activate + '&auth=' + API_KEY;
+  url = url + activate + '&auth=' + apiKey;
   console.log(url);
   httpRes.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
