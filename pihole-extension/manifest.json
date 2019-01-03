@@ -2,7 +2,7 @@
     "name": "Pihole Extension",
     "version": "0.1",
     "description": "An extension to control a pihole.",
-    "permissions": ["activeTab", "declarativeContent", "storage"],
+    "permissions": ["tabs", "activeTab", "declarativeContent", "storage"],
     "background": {
         "scripts": ["background.js"],
         "persistent": false
