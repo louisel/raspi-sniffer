@@ -15,8 +15,10 @@ changeColor.onclick = function(element) {
 };*/
 
 window.onload = function() {
-  //var API_KEY = chrome.localStorage.getItem("API_KEY");
-  var API_KEY = 'to get';
+  var apiKey = null;
+  chrome.storage.local.get(null, function(result) {
+    apiKey = result.apikey;
+  });
   let adminBtn = document.getElementById('admin');
   adminBtn.addEventListener('click', adminClick);
   let powerBtn = document.getElementById('power');
@@ -49,10 +51,16 @@ function powerClick(API_KEY, val) {
 }
 
 function toggleIcon(res) {
+  let powerImg = document.getElementGetId('power-img');
+  let powerBtn = document.getElementGetId('power');
   if (res.status == 'disabled') {
     console.log('pi is disabled');
+    powerBtn.value = 'OFF';
+    powerImg.src = '../images/power18.png';
   } else if (res.status == 'enabled') {
     console.log('enabled');
+    powerBtn.value = 'ON';
+    powerImg.src = '../images/power18.png';
   } else {
     console.log('something went wrong');
   }
