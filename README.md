@@ -4,6 +4,8 @@ Sniff traffic on a raspberry pi acting as an access point
 
 This is still a work in progress. We are updating as we go along.
 
+This project contains works under the Apache 2.0 license, specifically the icons used in the pihole extension. The icons are from the awesome Material Design icon library: https://material.io/tools/icons
+
 # Requirements
 
 Raspberry Pi
