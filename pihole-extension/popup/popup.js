@@ -25,6 +25,8 @@ window.onload = function() {
   powerBtn.addEventListener('click', () => {
     powerClick(API_KEY, powerBtn.value);
   });
+  let settingsBtn = document.getElementById('settings');
+  settingsBtn.addEventListener('click', settingsClick);
 };
 
 function adminClick() {
@@ -64,4 +66,8 @@ function toggleIcon(res) {
   } else {
     console.log('something went wrong');
   }
+}
+
+function settingsClick() {
+  chrome.runtime.openOptionsPage();
 }

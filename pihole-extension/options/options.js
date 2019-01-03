@@ -1,7 +1,6 @@
 window.onload = function() {
   loadValues();
-  let saveBtn = document.getElementById('saveBtn');
-  saveBtn.addEventListener('click', saveValues);
+  document.getElementById('saveBtn').addEventListener('click', saveValues);
 };
 
 function loadValues() {
