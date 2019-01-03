@@ -19,7 +19,7 @@ window.onload = function() {
   var piholeAddr = null;
   chrome.storage.local.get(null, function(result) {
     apiKey = result.apikey;
-    pihole = result.piholeAddr;
+    piholeAddr = result.piholeaddr;
   });
   let adminBtn = document.getElementById('admin');
   adminBtn.addEventListener('click', () => {
