@@ -15,12 +15,16 @@ changeColor.onclick = function(element) {
 };*/
 
 window.onload = function() {
-  var apiKey;
-  chrome.storage.local.get('apikey', function(result) {
+  var apiKey = null;
+  var piholeAddr = null;
+  chrome.storage.local.get(null, function(result) {
     apiKey = result.apikey;
+    pihole = result.piholeAddr;
   });
   let adminBtn = document.getElementById('admin');
-  adminBtn.addEventListener('click', adminClick);
+  adminBtn.addEventListener('click', () => {
+    adminClick(piholeAddr);
+  });
   let powerBtn = document.getElementById('power');
   powerBtn.addEventListener('click', () => {
     powerClick(apiKey, powerBtn.value);
@@ -29,12 +33,9 @@ window.onload = function() {
   settingsBtn.addEventListener('click', settingsClick);
 };
 
-function adminClick() {
-  console.log('clicked');
-  chrome.storage.local.get('routeraddr', function(result) {
-    var newUrl = 'http://' + result.routeraddr + '/admin';
-    window.open(newUrl);
-  });
+function adminClick(ipAddr) {
+  var newUrl = 'http://' + ipAddr + '/admin';
+  window.open(newUrl);
 }
 
 function powerClick(apiKey, val) {
@@ -59,11 +60,11 @@ function toggleIcon(res) {
   if (res.status == 'disabled') {
     console.log('pi is disabled');
     powerBtn.value = 'OFF';
-    powerImg.src = '../images/power18.png';
+    powerImg.src = '../images/unchecked18.png';
   } else if (res.status == 'enabled') {
     console.log('enabled');
     powerBtn.value = 'ON';
-    powerImg.src = '../images/power18.png';
+    powerImg.src = '../images/checked18.png';
   } else {
     console.log('something went wrong');
   }

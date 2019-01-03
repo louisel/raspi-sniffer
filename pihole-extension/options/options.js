@@ -9,15 +9,15 @@ function loadValues() {
     if (apiKey != null) {
       document.getElementById('apiKeyText').defaultValue = apiKey;
     }
-    let routerAddr = result.routeraddr;
-    if (routerAddr != null)
-      document.getElementById('routerAddrText').defaultValue = routerAddr;
+    let piholeAddr = result.piholeaddr;
+    if (piholeAddr != null)
+      document.getElementById('piholeAddrText').defaultValue = piholeAddr;
   });
 }
 
 function saveValues() {
   chrome.storage.local.set({
     apikey: document.getElementById('apiKeyText').value,
-    routeraddr: document.getElementById('routerAddrText').value
+    piholeaddr: document.getElementById('piholeAddrText').value
   });
 }
