@@ -15,30 +15,30 @@ changeColor.onclick = function(element) {
 };*/
 
 window.onload = function() {
-  var apiKey = null;
-  var piholeAddr = null;
-  chrome.storage.local.get(null, function(result) {
-    apiKey = result.apikey;
-    piholeAddr = result.piholeaddr;
-  });
   let adminBtn = document.getElementById('admin');
-  adminBtn.addEventListener('click', () => {
-    adminClick(piholeAddr);
-  });
+  adminBtn.addEventListener('click', adminClick);
   let powerBtn = document.getElementById('power');
   powerBtn.addEventListener('click', () => {
-    powerClick(apiKey, powerBtn.value);
+    powerClick(powerBtn.value);
   });
   let settingsBtn = document.getElementById('settings');
   settingsBtn.addEventListener('click', settingsClick);
 };
 
-function adminClick(ipAddr) {
-  var newUrl = 'http://' + ipAddr + '/admin';
+function adminClick() {
+  var piholeAddr = null;
+  chrome.storage.local.get(null, function(result) {
+    piholeAddr = result.piholeaddr;
+  });
+  var newUrl = 'http://' + piholeAddr + '/admin';
   window.open(newUrl);
 }
 
-function powerClick(apiKey, val) {
+function powerClick(val) {
+  var apiKey = null;
+  chrome.storage.local.get(null, function(result) {
+    apiKey = result.apikey;
+  });
   var xhr = new XMLHttpRequest();
   var url = 'http://pi.hole/admin/api.php?';
   var activate = val == 'ON' ? 'disable' : 'enable';
