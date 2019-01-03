@@ -15,9 +15,10 @@ changeColor.onclick = function(element) {
 };*/
 
 window.onload = function() {
-  /*chrome.storage.local.get(null, function(result) {
+  var apiKey;
+  chrome.storage.local.get('apikey', function(result) {
     apiKey = result.apikey;
-  });*/
+  });
   let adminBtn = document.getElementById('admin');
   adminBtn.addEventListener('click', adminClick);
   let powerBtn = document.getElementById('power');
@@ -30,9 +31,10 @@ window.onload = function() {
 
 function adminClick() {
   console.log('clicked');
-  var newUrl = 'http://192.168.0.11/admin'; //TODO: get ip from settings
-  //chrome.tabs.create({ url: newUrl });
-  window.open(newUrl);
+  chrome.storage.local.get('routeraddr', function(result) {
+    var newUrl = 'http://' + result.routeraddr + '/admin';
+    window.open(newUrl);
+  });
 }
 
 function powerClick(apiKey, val) {

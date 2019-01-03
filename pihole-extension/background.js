@@ -1,7 +1,9 @@
+/*
 chrome.runtime.onInstalled.addListener(function() {
   chrome.storage.sync.set({ color: '#3aa757' }, function() {
     console.log('The color is green.');
   });
+});
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     chrome.declarativeContent.onPageChanged.addRules([
       {
@@ -16,7 +18,7 @@ chrome.runtime.onInstalled.addListener(function() {
   });
 });
 
-/*
+
 function adminClick() {
      console.log("clicked");
      var newUrl = "192.168.0.11/admin"; //TODO: get ip from settings
