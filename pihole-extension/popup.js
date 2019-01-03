@@ -18,11 +18,12 @@ window.onload = function() {
   console.log('loaded');
   console.log(document.getElementById('admin'));
   let adminBtn = document.getElementById('admin');
-  adminBtn.onClick;
+  adminBtn.addEventListener('click', adminClick);
 };
 
 function adminClick() {
   console.log('clicked');
-  var newUrl = '192.168.0.11/admin'; //TODO: get ip from settings
-  chrome.tabs.create({ url: newUrl });
+  var newUrl = 'http://192.168.0.11/admin'; //TODO: get ip from settings
+  //chrome.tabs.create({ url: newUrl });
+  window.open(newUrl);
 }
