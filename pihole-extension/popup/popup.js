@@ -23,6 +23,8 @@ window.onload = function() {
   });
   let settingsBtn = document.getElementById('settings');
   settingsBtn.addEventListener('click', settingsClick);
+  let zapperBtn = document.getElementById('zapper');
+  zapperBtn.addEventListener('click', zapperClick);
 };
 
 function adminClick() {
@@ -47,7 +49,8 @@ function powerClick(val) {
   console.log(url);
   xhr.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      res = JSON.parse(this.response);
+      var res = JSON.parse(this.response);
+      console.log(res);
       togglePower(res);
     }
   };
@@ -67,10 +70,55 @@ function togglePower(res) {
     powerBtn.value = 'ON';
     powerImg.src = '../images/checked18.png';
   } else {
+    console.log(res.status);
     console.log('something went wrong');
   }
 }
 
 function settingsClick() {
   chrome.runtime.openOptionsPage();
+}
+
+function getElement() {
+  var target = null;
+  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+    chrome.tabs.executeScript(tabs[0].id, {
+      code: `
+             document.addEventListener("click", function(e) {
+               e = e || window.event;
+               target = e.target || e.srcElement;
+               console.log(target);
+               //text = target.textContent || target.innerText;
+            }, false);
+           `
+    });
+  });
+  console.log(target);
+  return target;
+}
+
+function zapperClick() {
+  var target = getElement();
+
+  var piholeAddr = '192.168.0.11';
+  var pwd = null;
+  /*chrome.storage.local.get(null, function(result) {
+     apiKey = result.apikey;
+     piholeAddr = result.piholeaddr;
+   });*/
+  var url = 'http://' + piholeAddr + '/admin/scripts/pi-hole/php/add.php';
+  var list = 'black';
+  var domain = 'www.google.com';
+  var data = 'list=' + list + '&domain=' + domain + '&pw=' + pwd;
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log('successfully removed');
+      console.log(this.response);
+      //remove element from dom, set to hidden
+    }
+  };
+  xhr.open('POST', url, true);
+  xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  xhr.send(data);
 }
