@@ -26,10 +26,10 @@ window.onload = function() {
 };
 
 function adminClick() {
-  var piholeAddr = null;
-  chrome.storage.local.get(null, function(result) {
+  var piholeAddr = '192.168.0.11';
+  /*chrome.storage.local.get(null, function(result) {
     piholeAddr = result.piholeaddr;
-  });
+  });*/
   var newUrl = 'http://' + piholeAddr + '/admin';
   window.open(newUrl);
 }
@@ -43,20 +43,21 @@ function powerClick(val) {
   var url = 'http://pi.hole/admin/api.php?';
   var activate = val == 'ON' ? 'disable' : 'enable';
   url = url + activate + '&auth=' + apiKey;
+  //url = "https://google.com";
   console.log(url);
   xhr.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       res = JSON.parse(this.response);
-      toggleIcon(res);
+      togglePower(res);
     }
   };
   xhr.open('GET', url, true);
   xhr.send();
 }
 
-function toggleIcon(res) {
-  let powerImg = document.getElementGetId('power-img');
-  let powerBtn = document.getElementGetId('power');
+function togglePower(res) {
+  let powerImg = document.getElementById('power-img');
+  let powerBtn = document.getElementById('power');
   if (res.status == 'disabled') {
     console.log('pi is disabled');
     powerBtn.value = 'OFF';
