@@ -15,10 +15,14 @@ changeColor.onclick = function(element) {
 };*/
 
 window.onload = function() {
-  console.log('loaded');
-  console.log(document.getElementById('admin'));
+  //var API_KEY = chrome.localStorage.getItem("API_KEY");
+  var API_KEY = 'to get';
   let adminBtn = document.getElementById('admin');
   adminBtn.addEventListener('click', adminClick);
+  let powerBtn = document.getElementById('power');
+  powerBtn.addEventListener('click', () => {
+    powerClick(API_KEY, powerBtn.value);
+  });
 };
 
 function adminClick() {
@@ -26,4 +30,30 @@ function adminClick() {
   var newUrl = 'http://192.168.0.11/admin'; //TODO: get ip from settings
   //chrome.tabs.create({ url: newUrl });
   window.open(newUrl);
+}
+
+function powerClick(API_KEY, val) {
+  var httpRes = new XMLHttpRequest();
+  var url = 'http://pi.hole/admin/api.php?';
+  var activate = val == 'ON' ? 'disable' : 'enable';
+  url = url + activate + '&auth=' + API_KEY;
+  console.log(url);
+  httpRes.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      res = JSON.parse(this.response);
+      toggleIcon(res);
+    }
+  };
+  httpRes.open('GET', url, true);
+  httpRes.send();
+}
+
+function toggleIcon(res) {
+  if (res.status == 'disabled') {
+    console.log('pi is disabled');
+  } else if (res.status == 'enabled') {
+    console.log('enabled');
+  } else {
+    console.log('something went wrong');
+  }
 }
