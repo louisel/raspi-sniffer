@@ -39,19 +39,19 @@ function adminClick(ipAddr) {
 }
 
 function powerClick(apiKey, val) {
-  var httpRes = new XMLHttpRequest();
+  var xhr = new XMLHttpRequest();
   var url = 'http://pi.hole/admin/api.php?';
   var activate = val == 'ON' ? 'disable' : 'enable';
   url = url + activate + '&auth=' + apiKey;
   console.log(url);
-  httpRes.onreadystatechange = function() {
+  xhr.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       res = JSON.parse(this.response);
       toggleIcon(res);
     }
   };
-  httpRes.open('GET', url, true);
-  httpRes.send();
+  xhr.open('GET', url, true);
+  xhr.send();
 }
 
 function toggleIcon(res) {
