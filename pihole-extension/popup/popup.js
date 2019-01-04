@@ -121,13 +121,7 @@ function addToBlacklist(target) {
 }
 
 function zapperClick() {
-  //var target = getElement();
   console.log('zapper is clicked');
-  /*chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, {}, function(response) {
-      console.log("message from background: " + JSON.stringify(response))
-    });
-  }); */
   chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, {}, function(response) {
       console.log(response);
@@ -140,5 +134,3 @@ function zapperClick() {
     });
   });
 }
-//chrome.tabs.executeScript( null, {code:"var x = 10; x"},
-//function(results){ console.log(results); } );

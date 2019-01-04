@@ -1,4 +1,9 @@
-1. Read from local storage
-2. Field to input pihole password to settings page
-3. Select dom elements
-4. Get domain of dom elements
+1. Read from local storage (popup.js)
+2. Field to input pihole password to settings page (options.html)
+3. Select dom elements with nice square boxes (content.js)
+4. Be able to use escape to exit zapper mode (content.js)
+5. Selection of zapper mode should close the popup immediately instead of requiring an additional click (popup.js)
+6. Figure out what is the appropriate domain to use for blacklisting, wildcards? (content.js & popup.js)
+7. Beautify options page (options.html)
+8. Update power api to use admin page instead of pi.hole api (popup.js)
+9. Zapper should only run once (ie only zap one element) (content.js)
