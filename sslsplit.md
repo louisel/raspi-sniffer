@@ -63,3 +63,22 @@ e.g.
 ```
 sudo sslsplit -D -l connections.log -j ./sslconn/ -S ./ssllog/ -k ca.key -c ca.cer ssl 0.0.0.0 8443 tcp 0.0.0.0 8080
 ```
+
+### sslsplit 0.5.4
+sslsplit 0.5.4 enables capturing pcap files and saving the premaster secret into a file (needed to decrypt the packets in the pcap file).
+
+To install,
+```
+sudo apt-get install libevent-dev libpcap-dev libnet1-dev
+
+wget https://mirror.roe.ch/rel/sslsplit/sslsplit-0.5.4.tar.bz2
+bunzip2 sslsplit-0.5.4.tar.bz2  
+tar xvf sslsplit-0.5.4.tar  
+cd sslsplit-0.5.4
+make install
+```
+
+An example command that you can run, `-X` being the pcap output file and `-M` being the ssl key log file for the premaster secret. This command uses the mitmproxy cert (`mitmproxy-ca.pem` contains both the key and the certificate according to https://docs.mitmproxy.org/stable/concepts-certificates/#ca-and-cert-files)
+```
+sudo sslsplit -D -l connections.log -c ~/.mitmproxy/mitmproxy-ca.pem -k ~/.mitmproxy/mitmproxy-ca.pem -X sslsplit.pcap -M sslkeylogfile ssl 0.0.0.0 8443 tcp 0.0.0.0 8080
+```
