@@ -1,0 +1,4 @@
+1. Read from local storage
+2. Field to input pihole password to settings page
+3. Select dom elements
+4. Get domain of dom elements
