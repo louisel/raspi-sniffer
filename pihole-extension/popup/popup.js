@@ -97,9 +97,7 @@ function getElement() {
   return target;
 }
 
-function zapperClick() {
-  var target = getElement();
-
+function addToBlacklist(target) {
   var piholeAddr = '192.168.0.11';
   var pwd = null;
   /*chrome.storage.local.get(null, function(result) {
@@ -108,7 +106,6 @@ function zapperClick() {
    });*/
   var url = 'http://' + piholeAddr + '/admin/scripts/pi-hole/php/add.php';
   var list = 'black';
-  var domain = 'www.google.com';
   var data = 'list=' + list + '&domain=' + domain + '&pw=' + pwd;
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
@@ -122,3 +119,26 @@ function zapperClick() {
   xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
   xhr.send(data);
 }
+
+function zapperClick() {
+  //var target = getElement();
+  console.log('zapper is clicked');
+  /*chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, {}, function(response) {
+      console.log("message from background: " + JSON.stringify(response))
+    });
+  }); */
+  chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, {}, function(response) {
+      console.log(response);
+      var resp = JSON.stringify(response);
+      if (resp.res == 'SUCCESS') {
+        addToBlackList(resp.domain);
+      } else {
+        //What to do?
+      }
+    });
+  });
+}
+//chrome.tabs.executeScript( null, {code:"var x = 10; x"},
+//function(results){ console.log(results); } );

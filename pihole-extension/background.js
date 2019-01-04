@@ -17,11 +17,8 @@ chrome.runtime.onInstalled.addListener(function() {
     ]);
   });
 });
-
-
-function adminClick() {
-     console.log("clicked");
-     var newUrl = "192.168.0.11/admin"; //TODO: get ip from settings
-     chrome.tabs.create({ url: newUrl });
- };
 */
+
+/*chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  console.log("background received message");
+});*/

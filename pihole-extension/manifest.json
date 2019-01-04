@@ -3,6 +3,8 @@
   "version": "0.1",
   "description": "An extension to control a pihole.",
   "permissions": [
+    "*://*/*",
+    "<all_urls>",
     "http://192.168.0.11/*",
     "http://pi.hole/*",
     "tabs",
@@ -23,6 +25,12 @@
       "128": "images/icon128.png"
     }
   },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content.js"]
+    }
+  ],
   "options_page": "options/options.html",
   "icons": {
     "16": "images/icon16.png",
