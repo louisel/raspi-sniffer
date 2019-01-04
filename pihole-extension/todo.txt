@@ -1,4 +1,4 @@
-1. Read from local storage (popup.js)
+1. Read from local storage (popup.js) (done)
 2. Field to input pihole password to settings page (options.html)
 3. Select dom elements with nice square boxes (content.js)
 4. Be able to use escape to exit zapper mode (content.js)

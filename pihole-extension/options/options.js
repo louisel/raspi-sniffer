@@ -5,9 +5,9 @@ window.onload = function() {
 
 function loadValues() {
   chrome.storage.local.get(null, function(result) {
-    let apiKey = result.apikey;
+    let login = result.login;
     if (apiKey != null) {
-      document.getElementById('apiKeyText').defaultValue = apiKey;
+      document.getElementById('login').defaultValue = login;
     }
     let piholeAddr = result.piholeaddr;
     if (piholeAddr != null)
@@ -17,7 +17,7 @@ function loadValues() {
 
 function saveValues() {
   chrome.storage.local.set({
-    apikey: document.getElementById('apiKeyText').value,
+    apikey: document.getElementById('login').value,
     piholeaddr: document.getElementById('piholeAddrText').value
   });
 }

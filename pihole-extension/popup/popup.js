@@ -28,25 +28,27 @@ window.onload = function() {
 };
 
 function adminClick() {
-  var piholeAddr = '192.168.0.11';
-  /*chrome.storage.local.get(null, function(result) {
-    piholeAddr = result.piholeaddr;
-  });*/
-  var newUrl = 'http://' + piholeAddr + '/admin';
-  window.open(newUrl);
+  chrome.storage.local.get(null, function(result) {
+    var piholeAddr = result.piholeaddr;
+
+    var newUrl = 'http://' + piholeAddr + '/admin';
+    window.open(newUrl);
+  });
 }
 
 function powerClick(val) {
-  var apiKey = null;
   chrome.storage.local.get(null, function(result) {
-    apiKey = result.apikey;
+    var apiKey = result.apikey;
+    powerOff(val, apiKey);
   });
+}
+
+//TODO: split API calls into a separate file?
+function powerOff(val, apiKey) {
   var xhr = new XMLHttpRequest();
   var url = 'http://pi.hole/admin/api.php?';
   var activate = val == 'ON' ? 'disable' : 'enable';
   url = url + activate + '&auth=' + apiKey;
-  //url = "https://google.com";
-  console.log(url);
   xhr.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       var res = JSON.parse(this.response);
@@ -98,15 +100,21 @@ function getElement() {
 }
 
 function addToBlacklist(target) {
-  var piholeAddr = '192.168.0.11';
-  var pwd = null;
-  /*chrome.storage.local.get(null, function(result) {
-     apiKey = result.apikey;
-     piholeAddr = result.piholeaddr;
-   });*/
+  chrome.storage.local.get(null, function(result) {
+    var pwd = result.login;
+    var piholeAddr = result.piholeaddr;
+    addToList(result.piholeAddr, 'black', target, pwd);
+  });
+}
+
+/**
+ * Adds to a white or blacklist
+ * listType should be 'black', 'white'
+ * TODO: listType as wild, regex or audit? See https://github.com/pi-hole/AdminLTE/blob/master/scripts/pi-hole/php/add.php
+ */
+function addToList(piholeAddr, listType, domain, password) {
   var url = 'http://' + piholeAddr + '/admin/scripts/pi-hole/php/add.php';
-  var list = 'black';
-  var data = 'list=' + list + '&domain=' + domain + '&pw=' + pwd;
+  var data = 'list=' + listType + '&domain=' + domain + '&pw=' + password;
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
