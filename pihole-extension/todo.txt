@@ -1,5 +1,5 @@
 1. Read from local storage (popup.js) (done)
-2. Field to input pihole password to settings page (options.html)
+2. Field to input pihole password to settings page (options.html) (done)
 3. Select dom elements with nice square boxes (content.js)
 4. Be able to use escape to exit zapper mode (content.js)
 5. Selection of zapper mode should close the popup immediately instead of requiring an additional click (popup.js)
