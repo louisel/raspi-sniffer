@@ -6,4 +6,3 @@
 6. Figure out what is the appropriate domain to use for blacklisting, wildcards? (content.js & popup.js)
 7. Beautify options page (options.html)
 8. Update power api to use admin page instead of pi.hole api (popup.js)
-9. Zapper should only run once (ie only zap one element) (content.js)
