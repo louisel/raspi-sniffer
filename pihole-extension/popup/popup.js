@@ -36,18 +36,19 @@ function adminClick() {
   });
 }
 
-function powerClick(val) {
+function powerClick(isActivated) {
   chrome.storage.local.get(null, function(result) {
+    var piholeAddr = result.piholeaddr;
     var apiKey = result.apikey;
-    powerOff(val, apiKey);
+    setPower(piholeAddr, isActivated, apiKey);
   });
 }
 
 //TODO: split API calls into a separate file?
-function powerOff(val, apiKey) {
+function setPower(piholeAddr, isActivated, apiKey) {
   var xhr = new XMLHttpRequest();
-  var url = 'http://pi.hole/admin/api.php?';
-  var activate = val == 'ON' ? 'disable' : 'enable';
+  var url = 'http://' + piholeAddr + '/admin/api.php?';
+  var activate = isActivated == 'ON' ? 'disable=0' : 'enable';
   url = url + activate + '&auth=' + apiKey;
   xhr.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {

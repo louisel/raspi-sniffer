@@ -7,4 +7,4 @@
 - [ ] Selection of zapper mode should close the popup immediately instead of requiring an additional click (popup.js)
 - [ ] Figure out what is the appropriate domain to use for blacklisting, wildcards? (content.js & popup.js)
 - [ ] Beautify options page (options.html)
-- [ ] Update power api to use admin page instead of pi.hole api (popup.js)
+- [x] Update power api to use admin page instead of pi.hole api (popup.js)
