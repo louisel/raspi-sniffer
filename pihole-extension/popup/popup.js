@@ -1,19 +1,3 @@
-/*let changeColor = document.getElementById('changeColor');
-
-chrome.storage.sync.get('color', function(data) {
-    changeColor.style.backgroundColor = data.color;
-    changeColor.setAttribute('value', data.color);
-});
-
-changeColor.onclick = function(element) {
-    let color = element.target.value;
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      chrome.tabs.executeScript(
-          tabs[0].id,
-          {code: 'document.body.style.backgroundColor = "' + color + '";'});
-    });
-};*/
-
 window.onload = function() {
   let adminBtn = document.getElementById('admin');
   adminBtn.addEventListener('click', adminClick);
@@ -29,7 +13,7 @@ window.onload = function() {
 
 function adminClick() {
   chrome.storage.local.get(null, function(result) {
-    var piholeAddr = result.piholeaddr;
+    var piholeAddr = result.piholeAddr;
 
     var newUrl = 'http://' + piholeAddr + '/admin';
     window.open(newUrl);
@@ -38,8 +22,8 @@ function adminClick() {
 
 function powerClick(isActivated) {
   chrome.storage.local.get(null, function(result) {
-    var piholeAddr = result.piholeaddr;
-    var apiKey = result.apikey;
+    var piholeAddr = result.piholeAddr;
+    var apiKey = result.apiKey;
     setPower(piholeAddr, isActivated, apiKey);
   });
 }
@@ -103,7 +87,7 @@ function getElement() {
 function addToBlacklist(target) {
   chrome.storage.local.get(null, function(result) {
     var pwd = result.login;
-    var piholeAddr = result.piholeaddr;
+    var piholeAddr = result.piholeAddr;
     addToList(result.piholeAddr, 'black', target, pwd);
   });
 }

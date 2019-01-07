@@ -1,5 +1,3 @@
-//document.body.style.background = 'yellow';
-
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   console.log('content script received message');
   var domain = null;
@@ -11,6 +9,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   }
 });
 
+// TODO: Ruixin can you rename this function (idk what it does other than it fires onclick) and rename the variable e
 var clickFunction = function(e) {
   var target = e.target;
   console.log(target);

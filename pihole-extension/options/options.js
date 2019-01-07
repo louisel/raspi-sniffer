@@ -9,11 +9,11 @@ function loadValues() {
     if (login != null) {
       document.getElementById('login').defaultValue = login;
     }
-    let apiKey = result.apikey;
+    let apiKey = result.apiKey;
     if (apiKey != null) {
       document.getElementById('apiKeyText').defaultValue = apiKey;
     }
-    let piholeAddr = result.piholeaddr;
+    let piholeAddr = result.piholeAddr;
     if (piholeAddr != null)
       document.getElementById('piholeAddrText').defaultValue = piholeAddr;
   });
@@ -22,7 +22,7 @@ function loadValues() {
 function saveValues() {
   chrome.storage.local.set({
     login: document.getElementById('login').value,
-    apikey: document.getElementById('apiKeyText').value,
-    piholeaddr: document.getElementById('piholeAddrText').value
+    apiKey: document.getElementById('apiKeyText').value,
+    piholeAddr: document.getElementById('piholeAddrText').value
   });
 }
