@@ -5,3 +5,48 @@ button {
   background-color: #fffffe;
   text-align: center;
 }
+
+.leftimg {
+  width: 32px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  padding: 23px 10px;
+}
+
+.righttext {
+  margin-left: 50px;
+  padding: 0px 10px;
+}
+
+.title h1 {
+  color: black;
+  margin-bottom: 5px;
+}
+
+.subtitle h2 {
+  color: grey;
+  margin-top: 5px;
+}
+
+.hint {
+  color: grey;
+}
+
+.divTable {
+  display: table;
+  width: 50%;
+}
+.divTableRow {
+  display: table-row;
+}
+.divTableCell {
+  border: 0px solid #000000;
+  display: table-cell;
+  padding: 5px 10px;
+}
+.divTableBody {
+  display: table-row-group;
+}

@@ -5,12 +5,36 @@
     <link rel="stylesheet" type="text/css" href="options.css" />
   </head>
   <body>
-    <h1>Pihole extension settings page</h1>
-    <p>Pihole admin password (Required to control the pihole)</p>
-    <p><input type="text" id="login" /></p>
+    <div class="leftimg"><img src="../images/icon32.png" /></div>
 
-    <p>Pihole address</p>
-    <p><input type="text" id="piholeAddrText" /></p>
-    <p><button id="saveBtn">Save</button></p>
+    <div class="righttext">
+      <div class="title"><h1>Pihole Extension</h1></div>
+      <div class="subtitle"><h2>Settings</h2></div>
+    </div>
+
+    <hr />
+
+    <div class="divTable">
+      <div class="divTableBody">
+        <div class="divTableRow">
+          <div class="divTableCell">Pihole admin password</div>
+          <div class="divTableCell">
+            <input type="text" id="login" /> <br />
+            <div class="hint">
+              Required to control the Pihole, e.g. aBcD1FGa
+            </div>
+          </div>
+        </div>
+        <div class="divTableRow">
+          <div class="divTableCell">Pihole address</div>
+          <div class="divTableCell">
+            <input type="text" id="piholeAddrText" /> <br />
+            <div class="hint">Address of the Pihole, e.g. 192.168.1.1</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button id="saveBtn">Save</button>
   </body>
 </html>
