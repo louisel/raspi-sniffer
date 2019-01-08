@@ -8,3 +8,4 @@
 - [ ] Figure out what is the appropriate domain to use for blacklisting, wildcards? (content.js & popup.js)
 - [ ] Beautify options page (options.html)
 - [x] Update power api to use admin page instead of pi.hole api (popup.js)
+- [ ] Expose port 53 for dns access outside of local network? (router and pi configurations)
