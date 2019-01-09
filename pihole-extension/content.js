@@ -9,9 +9,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   }
 });
 
-// TODO: Ruixin can you rename this function (idk what it does other than it fires onclick) and rename the variable e
-var clickFunction = function(e) {
-  var target = e.target;
+/** Selects dom of element selected and hides the element.
+ *  Gets the subdomain of source if the selected element is
+ *  an image.
+ *  Removes the event listener so the function will only fire
+ *  once (i.e. clicking to delete an element only occurs once after
+ *  the after the chrome runtime message is received).
+ * */
+var clickFunction = function(event) {
+  var target = event.target;
   console.log(target);
   if (target.tagName.toLowerCase() === 'img') {
     console.log('is image');
